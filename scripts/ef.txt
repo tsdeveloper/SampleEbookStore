@@ -1,0 +1,6 @@
+dotnet ef database update -s API -p Infra
+dotnet ef database drop -s API -p Infra
+
+dotnet ef migrations add initial -s API -p Infra
+dotnet ef migrations remove -s API -p Infra
+

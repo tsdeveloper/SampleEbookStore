@@ -2,28 +2,28 @@ using AutoMapper;
 using Core.DTOs;
 using Core.Entities;
 using Core.Interfaces;
-using Core.Interfaces.Services.Livros;
-using Core.Specification.Livros;
-using Core.Specification.Livros.SpecParams;
+using Core.Interfaces.Services.Assuntos;
+using Core.Specification.Assuntos;
+using Core.Specification.Assuntos.SpecParams;
 
 namespace Infra.Services;
 
-public class LivroService : ILivroService
+public class AssuntoService : IAssuntoService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public LivroService(IUnitOfWork unitOfWork, IMapper mapper)
+    public AssuntoService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-    public async Task<GenericResponse<Livro>> CreateLivroAsync(Livro entity)
+    public async Task<GenericResponse<Assunto>> CreateAssuntoAsync(Assunto entity)
     {
-        var response = new GenericResponse<Livro>();
+        var response = new GenericResponse<Assunto>();
 
         await _unitOfWork.BeginTransactionAsync();
 
-        _unitOfWork.Repository<Livro>().Add(entity);
+        _unitOfWork.Repository<Assunto>().Add(entity);
 
         var result = await _unitOfWork.SaveChangesAsync();
 
@@ -39,17 +39,17 @@ public class LivroService : ILivroService
 
         return response;
     }
-    public async Task<GenericResponse<Livro>> UpdateLivroAsync(int id, Livro entity)
+    public async Task<GenericResponse<Assunto>> UpdateAssuntoAsync(int id, Assunto entity)
     {
-         var response = new GenericResponse<Livro>();
+         var response = new GenericResponse<Assunto>();
 
-        var spec = new LivroObterTodosLivrosByFiltroSpecification(new LivroSpecParams { CodI = id });
-        var livroExist = await _unitOfWork.Repository<Livro>().GetExistEntityWithSpec(spec);
+        var spec = new AssuntoObterTodosAssuntosByFiltroSpecification(new AssuntoSpecParams { CodAs = id });
+        var AssuntoExist = await _unitOfWork.Repository<Assunto>().GetExistEntityWithSpec(spec);
 
-        if (livroExist)
+        if (AssuntoExist)
         {
             await _unitOfWork.BeginTransactionAsync();
-            _unitOfWork.Repository<Livro>().Update(entity);
+            _unitOfWork.Repository<Assunto>().Update(entity);
             var result = await _unitOfWork.SaveChangesAsync();
 
             if (result.Error != null)
@@ -66,16 +66,16 @@ public class LivroService : ILivroService
         }
 
         response.Error = new MessageResponse();
-        response.Error.Message = $"Não foi possível encontrar o livro {entity.Titulo}";
+        response.Error.Message = $"Não foi possível encontrar o Assunto {entity.Descricao}";
         return response;
     }
 
-    public async Task<GenericResponse<bool>> ExcludeLivroAsync(int id)
+    public async Task<GenericResponse<bool>> ExcludeAssuntoAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Livro> GetLivroAsync(Guid id)
+    public async Task<Assunto> GetAssuntoAsync(Guid id)
     {
         throw new NotImplementedException();
     }

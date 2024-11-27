@@ -7,6 +7,6 @@ public interface ILivroService
 {
   Task<Livro> GetLivroAsync(Guid id);
   Task<GenericResponse<Livro>> CreateLivroAsync(Livro entity);
-  Task<GenericResponse<Livro>> UpdateLivroAsync(Guid uid, Livro entity);
-  Task<GenericResponse<bool>> ExcludeLivroAsync(Guid id);
+  Task<GenericResponse<Livro>> UpdateLivroAsync(int id, Livro entity);
+  Task<GenericResponse<bool>> ExcludeLivroAsync(int id);
 }
