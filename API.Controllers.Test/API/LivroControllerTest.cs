@@ -29,7 +29,8 @@ public class LivroControllerTest : BaseTestService
         _serviceLivro,
         _repoMockMapper.Object,
         _validatorMockLivroCriarDto.Object,
-        _validatorMockLivroAtualizarDto.Object);
+        _validatorMockLivroAtualizarDto.Object,
+        _repoMockConverter.Object);
     }
 
     [Fact]

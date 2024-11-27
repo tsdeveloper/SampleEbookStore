@@ -9,6 +9,8 @@ using Core.Interfaces.Repositories.Livros;
 using Core.Interfaces.Services.Assuntos;
 using Core.Interfaces.Services.Autores;
 using Core.Interfaces.Services.Livros;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using FluentValidation;
 using Infra.Data;
 using Infra.Repositories;
@@ -22,6 +24,12 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, ConfigurationManager configuration)
         {
+        //             var architectureFolder = (IntPtr.Size == 8) ? "64 bit" : "32 bit";
+        //  var wkHtmlToPdfPath =    Path.Combine(Environment.CurrentDirectory, $"wkhtmltox\\v0.12.4\\{architectureFolder}\\libwkhtmltox");
+        //  CustomAssemblyLoadContext context = new CustomAssemblyLoadContext();
+        //  context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+                services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+
             var IsDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             var connectionString = IsDevelopment
            ? configuration.GetConnectionString("DEV-DOCKER-SQLSERVER")

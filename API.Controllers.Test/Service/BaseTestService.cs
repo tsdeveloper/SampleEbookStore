@@ -6,6 +6,7 @@ using Core.Interfaces.Repositories.Livros;
 using Core.Interfaces.Services.Assuntos;
 using Core.Interfaces.Services.Autores;
 using Core.Interfaces.Services.Livros;
+using DinkToPdf.Contracts;
 using FluentValidation;
 using Infra.Data;
 using Infra.Services;
@@ -34,6 +35,7 @@ internal Dictionary<string, string> OverrideConfiguration = new();
   protected Mock<IValidator<LivroAtualizarDto>> _validatorMockLivroAtualizarDto;
   protected Mock<IUnitOfWork> _repoMockUnitOfWork;
   protected Mock<IMapper> _repoMockMapper;
+  protected Mock<IConverter> _repoMockConverter;
   protected ILivroRepository _repoLivro => _repoMockLivro.Object;
   protected LivroService _serviceLivro;
   protected readonly HttpClient _httpClient;
@@ -57,6 +59,7 @@ internal Dictionary<string, string> OverrideConfiguration = new();
     _validatorMockLivroAtualizarDto = new Mock<IValidator<LivroAtualizarDto>>();
     _repoMockUnitOfWork = new Mock<IUnitOfWork>();
     _repoMockMapper = new Mock<IMapper>();
+    _repoMockConverter = new Mock<IConverter>();
   }
 
   private void LoadApplicationServices()
