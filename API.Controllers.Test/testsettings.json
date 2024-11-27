@@ -1,0 +1,11 @@
+{
+  "ConnectionStrings": {
+    "DEV-DOCKER-SQLSERVER": "Server=localhost,1433;Database=dev-bookstoredb;User Id=sa;Password=senha@123;Encrypt=True;TrustServerCertificate=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}

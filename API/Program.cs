@@ -52,3 +52,7 @@ app.UseCors("AllowOrigins");
 
 app.Run();
 
+public partial class Program {
+
+}
+record Options(string value);
