@@ -3,12 +3,20 @@ using Core.DTOs.Livros;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Interfaces.Repositories.Livros;
+using Core.Interfaces.Services.Assuntos;
+using Core.Interfaces.Services.Autores;
+using Core.Interfaces.Services.Livros;
 using FluentValidation;
+using Infra.Data;
 using Infra.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
 
@@ -32,7 +40,11 @@ internal Dictionary<string, string> OverrideConfiguration = new();
 
   public BaseTestService()
   {
-    _httpClient = CreateClient();
+        _httpClient = CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false,
+            BaseAddress = new Uri("http://localhost:7001/api")
+        });
     LoadApplicationMockServices();
     LoadApplicationServices();
   }
@@ -66,6 +78,40 @@ internal Dictionary<string, string> OverrideConfiguration = new();
           builder.AddInMemoryCollection(OverrideConfiguration);
 
         });
+        builder.ConfigureTestServices((services) =>
+        {
+            // Remove the existing DbContextOptions
+            services.RemoveAll(typeof(DbContextOptions<SampleEbookStoreContext>));
+            services.RemoveAll(typeof(IGenericRepository<>));
+            services.RemoveAll<IUnitOfWork>();
+            services.RemoveAll<ILivroRepository>();
+            services.RemoveAll<ILivroService>();
+            services.RemoveAll<IAutorService>();
+            services.RemoveAll<IAssuntoService>();
+
+            var serviceProvider = services.BuildServiceProvider();
+            var scope = serviceProvider.CreateScope();
+            // Register a new DBContext that will use our test connection string
+            var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+            string? connString = GetConnectionString(config);
+            services.AddSqlServer<SampleEbookStoreContext>(connString);
+
+            // Delete the database (if exists) to ensure we start clean
+            SampleEbookStoreContext dbContext = CreateDbContext(services);
+        });
     }
- 
+    private static string? GetConnectionString(IConfiguration config)
+    {
+            var connString = config.GetConnectionString("DEV-DOCKER-SQLSERVER");
+        return connString;
+    }
+
+    private static SampleEbookStoreContext CreateDbContext(IServiceCollection services)
+    {
+        var serviceProvider = services.BuildServiceProvider();
+        var scope = serviceProvider.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<SampleEbookStoreContext>();
+        return dbContext;
+    }
+
 }

@@ -35,15 +35,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-try
-{
-    DbInitializer.InitDb(app);
-}
-catch (Exception ex)
-{
+//try
+//{
+//    DbInitializer.InitDb(app);
+//}
+//catch (Exception ex)
+//{
     
-    Console.WriteLine(ex);
-}
+//    Console.WriteLine(ex);
+//}
 app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllers();
