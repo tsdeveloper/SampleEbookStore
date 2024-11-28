@@ -129,7 +129,7 @@ public class AutorController : BaseApiController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<LivroReturnDto>> DeleteAutorPorBy(int id)
+    public async Task<IActionResult> DeleteAutorPorBy(int id)
     {
         var result = await _serviceAutor.ExcludeAutorAsync(id);
 
