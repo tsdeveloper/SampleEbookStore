@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Errors;
 using AutoMapper;
 using Core.DTOs.Autors;
+using Core.DTOs.Livros;
 using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
@@ -114,6 +115,23 @@ public class AutorController : BaseApiController
 
         var Autor = _mapper.Map<Autor>(dto);
         var result = await _serviceAutor.UpdateAutorAsync(id, Autor);
+
+        if (result.Error != null) return BadRequest(new ApiResponse(400, result.Error.Message));
+        return NoContent();
+
+    }
+
+    [HttpDelete("remover/{id:int}")]
+    [ProducesDefaultResponseType]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<LivroReturnDto>> DeleteAutorPorBy(int id)
+    {
+        var result = await _serviceAutor.ExcludeAutorAsync(id);
 
         if (result.Error != null) return BadRequest(new ApiResponse(400, result.Error.Message));
         return NoContent();

@@ -5,6 +5,7 @@ using Core.Interfaces;
 using Core.Interfaces.Services.Autores;
 using Core.Specification.Autors;
 using Core.Specification.Autors.SpecParams;
+using static Dapper.SqlMapper;
 
 namespace Infra.Services;
 
@@ -72,7 +73,33 @@ public class AutorService : IAutorService
 
     public async Task<GenericResponse<bool>> ExcludeAutorAsync(int id)
     {
-        throw new NotImplementedException();
+        var response = new GenericResponse<bool>();
+
+        var spec = new AutorObterTodosAutoresByFiltroSpecification(new AutorSpecParams { CodAu = id });
+        var entity = await _unitOfWork.Repository<Autor>().GetEntityWithSpec(spec);
+
+        if (entity !=null)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            _unitOfWork.Repository<Autor>().Delete(entity);
+            var result = await _unitOfWork.SaveChangesAsync();
+
+            if (result.Error != null)
+            {
+                await _unitOfWork.RollbackAsync();
+
+                response.Error = result.Error;
+                return response;
+            }
+
+            await _unitOfWork.CommitAsync();
+
+            return response;
+        }
+
+        response.Error = new MessageResponse();
+        response.Error.Message = $"Não foi possível encontrar o Autor {entity.Nome}";
+        return response;
     }
 
     public async Task<Autor> GetAutorAsync(Guid id)

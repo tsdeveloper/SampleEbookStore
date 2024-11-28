@@ -104,7 +104,33 @@ public class LivroService : ILivroService
 
     public async Task<GenericResponse<bool>> ExcludeLivroAsync(int id)
     {
-        throw new NotImplementedException();
+        var response = new GenericResponse<bool>();
+
+        var spec = new LivroObterTodosLivrosByFiltroSpecification(new LivroSpecParams { CodL = id });
+        var entity = await _repoLivro.GetEntityWithSpec(spec);
+
+        if (entity !=null)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            _unitOfWork.Repository<Livro>().Delete(entity);
+            var result = await _unitOfWork.SaveChangesAsync();
+
+            if (result.Error != null)
+            {
+                await _unitOfWork.RollbackAsync();
+
+                response.Error = result.Error;
+                return response;
+            }
+
+            await _unitOfWork.CommitAsync();
+
+            return response;
+        }
+
+        response.Error = new MessageResponse();
+        response.Error.Message = $"Não foi possível encontrar o livro {id}";
+        return response;
     }
 
     public async Task<Livro> GetLivroAsync(Guid id)

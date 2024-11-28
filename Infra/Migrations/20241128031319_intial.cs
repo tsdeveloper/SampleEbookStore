@@ -45,7 +45,8 @@ namespace Infra.Migrations
                     Titulo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Editora = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Edicao = table.Column<int>(type: "int", nullable: false),
-                    AnoPublicacao = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false)
+                    AnoPublicacao = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {

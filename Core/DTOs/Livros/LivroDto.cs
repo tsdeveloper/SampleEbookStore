@@ -15,6 +15,8 @@ namespace Core.DTOs.Livros
         public string Editora { get; set; }
         public int Edicao { get; set; }
         public int AnoPublicacao { get; set; }
+        public decimal Preco { get; set; }
+
         public ICollection<LivroAutorReturnDto> Autores { get; set; } = new List<LivroAutorReturnDto>();
         public ICollection<LivroAssuntoReturnDto> Assuntos { get; set; } = new List<LivroAssuntoReturnDto>();
 
@@ -26,6 +28,8 @@ namespace Core.DTOs.Livros
         public string Editora { get; set; }
         public int Edicao { get; set; }
         public int AnoPublicacao { get; set; }
+        public decimal Preco { get; set; }
+
         public ICollection<LivroAutorCreateDto> Autores { get; set; } = new List<LivroAutorCreateDto>();
         public ICollection<LivroAssuntoCreateDto> Assuntos { get; set; } = new List<LivroAssuntoCreateDto>();
     }
@@ -37,6 +41,8 @@ namespace Core.DTOs.Livros
         public string Editora { get; set; }
         public int Edicao { get; set; }
         public int AnoPublicacao { get; set; }
+        public decimal Preco { get; set; }
+
         public ICollection<LivroAutorCreateDto> Autores { get; set; } = new List<LivroAutorCreateDto>();
         public ICollection<LivroAssuntoCreateDto> Assuntos { get; set; } = new List<LivroAssuntoCreateDto>();
     }

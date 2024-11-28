@@ -78,6 +78,9 @@ namespace Infra.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<decimal>("Preco")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasMaxLength(40)

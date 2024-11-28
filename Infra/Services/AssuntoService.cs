@@ -5,6 +5,7 @@ using Core.Interfaces;
 using Core.Interfaces.Services.Assuntos;
 using Core.Specification.Assuntos;
 using Core.Specification.Assuntos.SpecParams;
+using static Dapper.SqlMapper;
 
 namespace Infra.Services;
 
@@ -72,7 +73,33 @@ public class AssuntoService : IAssuntoService
 
     public async Task<GenericResponse<bool>> ExcludeAssuntoAsync(int id)
     {
-        throw new NotImplementedException();
+        var response = new GenericResponse<bool>();
+
+        var spec = new AssuntoObterTodosAssuntosByFiltroSpecification(new AssuntoSpecParams { CodAs = id });
+        var entity = await _unitOfWork.Repository<Assunto>().GetEntityWithSpec(spec);
+
+        if (entity != null)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+            _unitOfWork.Repository<Assunto>().Delete(entity);
+            var result = await _unitOfWork.SaveChangesAsync();
+
+            if (result.Error != null)
+            {
+                await _unitOfWork.RollbackAsync();
+
+                response.Error = result.Error;
+                return response;
+            }
+
+            await _unitOfWork.CommitAsync();
+
+            return response;
+        }
+
+        response.Error = new MessageResponse();
+        response.Error.Message = $"Não foi possível encontrar o Assunto ID {id}";
+        return response;
     }
 
     public async Task<Assunto> GetAssuntoAsync(Guid id)

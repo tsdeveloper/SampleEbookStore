@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infra.Migrations
 {
     [DbContext(typeof(SampleEbookStoreContext))]
-    [Migration("20241127182808_intial")]
+    [Migration("20241128031319_intial")]
     partial class intial
     {
         /// <inheritdoc />
@@ -80,6 +80,9 @@ namespace Infra.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
+
+                    b.Property<decimal>("Preco")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()

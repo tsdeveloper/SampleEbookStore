@@ -165,6 +165,24 @@ public class LivroController : BaseApiController
 
     }
 
+    [HttpDelete("remover/{id:int}")]
+    [ProducesDefaultResponseType]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<LivroReturnDto>> DeleteLivroPorBy(int id)
+    {
+        var result = await _serviceLivro.ExcludeLivroAsync(id);
+
+        if (result.Error != null) return BadRequest(new ApiResponse(400, result.Error.Message));
+        return NoContent();
+
+    }
+
+
     [HttpGet("gerar-pdf"), DisableRequestSizeLimit]
     public async Task<IActionResult> Download()
     {

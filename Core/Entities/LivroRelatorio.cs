@@ -8,6 +8,7 @@ public class LivroRelatorio
   public string Editora { get; set; }
   public int Edicao { get; set; }
   public string AnoPublicacao { get; set; }
+  public decimal Preco { get; set; }
   public string CodAu { get; set; }
   public string Nome { get; set; }
   public string CodAs { get; set; }
