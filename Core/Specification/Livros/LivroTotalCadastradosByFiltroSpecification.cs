@@ -7,7 +7,7 @@ public class LivroTotalCadastradosByFiltroSpecification : BaseSpecification<Livr
 {
   public LivroTotalCadastradosByFiltroSpecification(LivroSpecParams specParams)
   : base(x => 
-        (specParams.CodI == null || x.CodI.Equals(specParams.CodI))
+        (specParams.CodL == null || x.CodL.Equals(specParams.CodL))
         && (specParams.Search == null || x.Titulo.Contains(specParams.Search))
         && (specParams.Editora == null || x.Editora.Contains(specParams.Editora))
         && (specParams.Edicao == null || x.Edicao.Equals(specParams.Edicao))

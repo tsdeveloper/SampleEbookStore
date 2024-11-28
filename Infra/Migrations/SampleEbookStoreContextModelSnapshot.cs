@@ -59,11 +59,11 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Core.Entities.Livro", b =>
                 {
-                    b.Property<int>("CodI")
+                    b.Property<int>("CodL")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodI"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodL"));
 
                     b.Property<string>("AnoPublicacao")
                         .IsRequired()
@@ -83,20 +83,20 @@ namespace Infra.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.HasKey("CodI");
+                    b.HasKey("CodL");
 
                     b.ToTable("Livro");
                 });
 
             modelBuilder.Entity("Core.Entities.Livro_Assunto", b =>
                 {
-                    b.Property<int>("Livro_CodI")
+                    b.Property<int>("Livro_CodL")
                         .HasColumnType("int");
 
                     b.Property<int>("Assunto_CodAs")
                         .HasColumnType("int");
 
-                    b.HasKey("Livro_CodI", "Assunto_CodAs");
+                    b.HasKey("Livro_CodL", "Assunto_CodAs");
 
                     b.HasIndex("Assunto_CodAs");
 
@@ -108,12 +108,12 @@ namespace Infra.Migrations
                     b.Property<int>("Autor_CodAu")
                         .HasColumnType("int");
 
-                    b.Property<int>("Livro_CodI")
+                    b.Property<int>("Livro_CodL")
                         .HasColumnType("int");
 
-                    b.HasKey("Autor_CodAu", "Livro_CodI");
+                    b.HasKey("Autor_CodAu", "Livro_CodL");
 
-                    b.HasIndex("Livro_CodI");
+                    b.HasIndex("Livro_CodL");
 
                     b.ToTable("Livro_Autor");
                 });
@@ -128,7 +128,7 @@ namespace Infra.Migrations
 
                     b.HasOne("Core.Entities.Livro", "Livro")
                         .WithMany("Livro_AssuntoList")
-                        .HasForeignKey("Livro_CodI")
+                        .HasForeignKey("Livro_CodL")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -147,7 +147,7 @@ namespace Infra.Migrations
 
                     b.HasOne("Core.Entities.Livro", "Livro")
                         .WithMany("Livro_AutorList")
-                        .HasForeignKey("Livro_CodI")
+                        .HasForeignKey("Livro_CodL")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

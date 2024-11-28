@@ -1,0 +1,19 @@
+{
+  "codL": 26,
+  "titulo": "livro1",
+  "editora": "livro1",
+  "edicao": 1,
+  "anoPublicacao": "2024",
+  "autores": [
+    {
+      "codAu": 1,
+      "codL": 26
+    }
+  ],
+  "assuntos": [
+    {
+      "codAs": 1,
+      "codL": 26
+    }
+  ]
+}

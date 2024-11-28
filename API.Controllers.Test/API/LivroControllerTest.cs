@@ -24,13 +24,15 @@ public class LivroControllerTest : BaseTestService
 
     public LivroControllerTest()
     {
-      
+
         _livroController = new LivroController(_genericMockLivro.Object,
         _serviceLivro,
         _repoMockMapper.Object,
         _validatorMockLivroCriarDto.Object,
         _validatorMockLivroAtualizarDto.Object,
-        _repoMockConverter.Object);
+        _repoMockConverter.Object,
+        _reporMockAutor.Object,
+        _reporMockAssunto.Object);
     }
 
     [Fact]
@@ -45,12 +47,12 @@ public class LivroControllerTest : BaseTestService
         _repoMockMapper.Setup(mapper => mapper.Map<LivroReturnDto>(It.IsAny<Livro>()))
 .Returns(resultMapperLivro);
 
-        var result = await _livroController.GetDetalhesPorId(request.CodI);
+        var result = await _livroController.GetDetalhesPorId(request.CodL);
 
         var matchResponse = ((OkObjectResult)result.Result).Value as LivroReturnDto;
 
         matchResponse.ShouldNotBeNull();
-        matchResponse.CodI.ShouldBeEquivalentTo(request.CodI);
+        matchResponse.CodL.ShouldBeEquivalentTo(request.CodL);
         _genericMockLivro.Verify(x => x.GetEntityWithSpec(It.IsAny<LivroObterTodosLivrosByFiltroSpecification>()), Times.Once);
     }
 }

@@ -31,6 +31,8 @@ internal Dictionary<string, string> OverrideConfiguration = new();
 
   protected Mock<ILivroRepository> _repoMockLivro;
   protected Mock<IGenericRepository<Livro>> _genericMockLivro;
+  protected Mock<IAutorRepository> _reporMockAutor;
+  protected Mock<IAssuntoRepository> _reporMockAssunto;
   protected Mock<IValidator<LivroCriarDto>> _validatorMockLivroCriarDto;
   protected Mock<IValidator<LivroAtualizarDto>> _validatorMockLivroAtualizarDto;
   protected Mock<IUnitOfWork> _repoMockUnitOfWork;
@@ -60,11 +62,13 @@ internal Dictionary<string, string> OverrideConfiguration = new();
     _repoMockUnitOfWork = new Mock<IUnitOfWork>();
     _repoMockMapper = new Mock<IMapper>();
     _repoMockConverter = new Mock<IConverter>();
+        _reporMockAutor = new Mock<IAutorRepository>();
+        _reporMockAssunto = new Mock<IAssuntoRepository>();
   }
 
   private void LoadApplicationServices()
   {
-    _serviceLivro = new LivroService(_repoMockUnitOfWork.Object, _repoMockMapper.Object);
+    _serviceLivro = new LivroService(_repoMockUnitOfWork.Object, _repoMockMapper.Object, _repoMockLivro.Object);
   }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

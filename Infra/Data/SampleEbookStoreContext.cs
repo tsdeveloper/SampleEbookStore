@@ -1,3 +1,5 @@
+using System.Data;
+using System.Data.SqlClient;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 namespace Infra.Data;
@@ -11,5 +13,4 @@ public class SampleEbookStoreContext : DbContext
     base.OnModelCreating(m);
     m.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
   }
-
 }

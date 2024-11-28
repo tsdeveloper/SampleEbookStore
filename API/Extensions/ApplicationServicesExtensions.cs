@@ -24,11 +24,11 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, ConfigurationManager configuration)
         {
-        //             var architectureFolder = (IntPtr.Size == 8) ? "64 bit" : "32 bit";
-        //  var wkHtmlToPdfPath =    Path.Combine(Environment.CurrentDirectory, $"wkhtmltox\\v0.12.4\\{architectureFolder}\\libwkhtmltox");
-        //  CustomAssemblyLoadContext context = new CustomAssemblyLoadContext();
-        //  context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
-                services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            //var architectureFolder = (IntPtr.Size == 8) ? "64 bit" : "32 bit";
+            //var wkHtmlToPdfPath = Path.Combine(Environment.CurrentDirectory, $"wkhtmltox\\v0.12.4\\{architectureFolder}\\libwkhtmltox");
+            //CustomAssemblyLoadContext context = new CustomAssemblyLoadContext();
+            //context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             var IsDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             var connectionString = IsDevelopment
@@ -44,8 +44,9 @@ namespace API.Extensions
 
             #region Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IAssuntoRepository, AssuntoRepository>();
             services.AddScoped<ILivroRepository, LivroRepository>();
-
+            services.AddScoped<IAutorRepository, AutorRepository>();
             #endregion
 
             #region Services

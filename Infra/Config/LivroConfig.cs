@@ -8,7 +8,7 @@ public class LivroConfig : IEntityTypeConfiguration<Livro>
 {
     public void Configure(EntityTypeBuilder<Livro> b)
     {
-        b.HasKey(x => x.CodI);
+        b.HasKey(x => x.CodL);
 
         b.Property(x => x.Titulo)
             .HasMaxLength(40)

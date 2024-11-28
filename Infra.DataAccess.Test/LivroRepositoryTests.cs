@@ -48,8 +48,8 @@ public class LivroRepositoryTests
 
         using (var context = new SampleEbookStoreContext(options))
         {
-            var livro = context.Set<Livro>().FirstOrDefault(x => x.CodI == 1);
-            Assert.AreEqual(_fakerLivros.FirstOrDefault().CodI, livro.CodI);
+            var livro = context.Set<Livro>().FirstOrDefault(x => x.CodL == 1);
+            Assert.AreEqual(_fakerLivros.FirstOrDefault().CodL, livro.CodL);
         }
     }
 }

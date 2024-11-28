@@ -13,8 +13,8 @@ namespace Core.Validators.Livros
         {
             RuleFor(c => c.Titulo).NotEmpty().NotNull().MaximumLength(40).WithMessage("{PropertyName} is required.");
             RuleFor(c => c.Editora).NotEmpty().NotNull().MaximumLength(40).WithMessage("{PropertyName} is required.");
-            RuleFor(c => c.Edicao).NotEmpty().NotNull().GreaterThan(40).WithMessage("{PropertyName} is required.");
-            RuleFor(c => c.AnoPublicacao).NotEmpty().NotNull().MaximumLength(4).WithMessage("{PropertyName} is required.");
+            RuleFor(c => c.Edicao).NotEmpty().NotNull().WithMessage("{PropertyName} is required.");
+            RuleFor(c => c.AnoPublicacao).NotEmpty().NotNull().GreaterThan(4).WithMessage("{PropertyName} is required.");
         }
     }
 
@@ -22,11 +22,11 @@ namespace Core.Validators.Livros
     {
         public LivroAtualizarDtoValidator()
         {
-            RuleFor(c => c.CodI).NotEmpty().NotNull().GreaterThan(0).WithMessage("{PropertyName} is required.");
+            RuleFor(c => c.CodL).NotEmpty().NotNull().WithMessage("{PropertyName} is required.");
             RuleFor(c => c.Titulo).NotEmpty().NotNull().MaximumLength(40).WithMessage("{PropertyName} is required.");
             RuleFor(c => c.Editora).NotEmpty().NotNull().MaximumLength(40).WithMessage("{PropertyName} is required.");
-            RuleFor(c => c.Edicao).NotEmpty().NotNull().GreaterThan(40).WithMessage("{PropertyName} is required.");
-            RuleFor(c => c.AnoPublicacao).NotEmpty().NotNull().MaximumLength(4).WithMessage("{PropertyName} is required.");
+            RuleFor(c => c.Edicao).NotEmpty().NotNull().WithMessage("{PropertyName} is required.");
+            RuleFor(c => c.AnoPublicacao).NotEmpty().NotNull().GreaterThan(4).WithMessage("{PropertyName} is required.");
         }
     }
 }

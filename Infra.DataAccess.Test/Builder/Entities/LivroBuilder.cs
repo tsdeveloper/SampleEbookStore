@@ -6,7 +6,7 @@ public class LivroBuilder : BaseBuilder<Livro>
 {
   public LivroBuilder Default()
   {
-    _instance.CodI = 1;
+    _instance.CodL = 1;
     _instance.Titulo = "Livro1";
     _instance.Editora = "BooktStore";
     _instance.Edicao = 1;

@@ -5,7 +5,7 @@
 namespace Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class intial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,7 +40,7 @@ namespace Infra.Migrations
                 name: "Livro",
                 columns: table => new
                 {
-                    CodI = table.Column<int>(type: "int", nullable: false)
+                    CodL = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Editora = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
@@ -49,19 +49,19 @@ namespace Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Livro", x => x.CodI);
+                    table.PrimaryKey("PK_Livro", x => x.CodL);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Livro_Assunto",
                 columns: table => new
                 {
-                    Livro_CodI = table.Column<int>(type: "int", nullable: false),
+                    Livro_CodL = table.Column<int>(type: "int", nullable: false),
                     Assunto_CodAs = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Livro_Assunto", x => new { x.Livro_CodI, x.Assunto_CodAs });
+                    table.PrimaryKey("PK_Livro_Assunto", x => new { x.Livro_CodL, x.Assunto_CodAs });
                     table.ForeignKey(
                         name: "FK_Livro_Assunto_Assunto_Assunto_CodAs",
                         column: x => x.Assunto_CodAs,
@@ -69,10 +69,10 @@ namespace Infra.Migrations
                         principalColumn: "CodAs",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Livro_Assunto_Livro_Livro_CodI",
-                        column: x => x.Livro_CodI,
+                        name: "FK_Livro_Assunto_Livro_Livro_CodL",
+                        column: x => x.Livro_CodL,
                         principalTable: "Livro",
-                        principalColumn: "CodI",
+                        principalColumn: "CodL",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -80,12 +80,12 @@ namespace Infra.Migrations
                 name: "Livro_Autor",
                 columns: table => new
                 {
-                    Livro_CodI = table.Column<int>(type: "int", nullable: false),
+                    Livro_CodL = table.Column<int>(type: "int", nullable: false),
                     Autor_CodAu = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Livro_Autor", x => new { x.Autor_CodAu, x.Livro_CodI });
+                    table.PrimaryKey("PK_Livro_Autor", x => new { x.Autor_CodAu, x.Livro_CodL });
                     table.ForeignKey(
                         name: "FK_Livro_Autor_Autor_Autor_CodAu",
                         column: x => x.Autor_CodAu,
@@ -93,10 +93,10 @@ namespace Infra.Migrations
                         principalColumn: "CodAu",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Livro_Autor_Livro_Livro_CodI",
-                        column: x => x.Livro_CodI,
+                        name: "FK_Livro_Autor_Livro_Livro_CodL",
+                        column: x => x.Livro_CodL,
                         principalTable: "Livro",
-                        principalColumn: "CodI",
+                        principalColumn: "CodL",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -106,9 +106,9 @@ namespace Infra.Migrations
                 column: "Assunto_CodAs");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Livro_Autor_Livro_CodI",
+                name: "IX_Livro_Autor_Livro_CodL",
                 table: "Livro_Autor",
-                column: "Livro_CodI");
+                column: "Livro_CodL");
         }
 
         /// <inheritdoc />

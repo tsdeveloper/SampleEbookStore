@@ -9,10 +9,10 @@ public class Livro
   }
   public Livro(int livroIds)
   {
-    CodI = livroIds;
+    CodL = livroIds;
   }
 
-  public int CodI { get; set; }
+  public int CodL { get; set; }
   public string Titulo { get; set; }
   public string Editora { get; set; }
   public int Edicao { get; set; }
