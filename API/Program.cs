@@ -6,6 +6,13 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging(logging => logging.AddConsole());
+builder.Services.AddHttpLogging(o => { });
+
+using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+ILogger logger = factory.CreateLogger("start Program");
+
 var configuration = builder.Configuration;
 
 // Add services to the container.

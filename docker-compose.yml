@@ -1,0 +1,29 @@
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    ports:
+      - "7001:8080" # Maps container port 5000 to host port 5000
+    networks:
+      - localdev    
+  sql-server:
+    container_name: sqlserver
+    image: mcr.microsoft.com/azure-sql-edge
+    environment:
+      ACCEPT_EULA: "1"
+      MSSQL_SA_PASSWORD: "senha@123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+    networks:
+      - localdev      
+
+volumes:
+  sql-data:      
+
+networks:
+  localdev:
+    external: true

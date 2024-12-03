@@ -30,11 +30,15 @@ namespace API.Extensions
             //context.LoadUnmanagedLibrary(wkHtmlToPdfPath);
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
+            var factory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
+            ILogger log = factory.CreateLogger("Start Application Extensions");
+
             var IsDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             var connectionString = IsDevelopment
            ? configuration.GetConnectionString("DEV-DOCKER-SQLSERVER")
-           : configuration.GetConnectionString("PROD-DOCKER-SQLSERVER");
+           : configuration.GetConnectionString("PRD-DOCKER-SQLSERVER");
 
+           log.LogInformation("connectionString", connectionString);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
