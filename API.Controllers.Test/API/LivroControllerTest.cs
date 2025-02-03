@@ -25,26 +25,22 @@ public class LivroControllerTest : BaseTestService
     public LivroControllerTest()
     {
 
-        _livroController = new LivroController(_genericMockLivro.Object,
-        _serviceLivro,
-        _repoMockMapper.Object,
-        _validatorMockLivroCriarDto.Object,
-        _validatorMockLivroAtualizarDto.Object,
-        _repoMockConverter.Object,
-        _reporMockAutor.Object,
-        _reporMockAssunto.Object);
+        _livroController = new LivroController(_genericMockILivro.Object, _serviceILivro.Object,
+            _repoMockIMapper.Object, _validatorMockLivroCriarDto.Object, _validatorMockLivroAtualizarDto.Object,
+            _repoMockIConverter.Object, _reporMockIAutor.Object, _reporMockIAssunto.Object,
+            _repoLivro);
     }
 
     [Fact]
     public async Task Step_01_LivroEncontrado_GetController()
     {
-        _genericMockLivro.MockGetEntityWithSpec(new LivroBuilder().Default().Build());
+        _genericMockILivro.MockGetEntityWithSpec(new LivroBuilder().Default().Build());
 
         var request = new LivroBuilder().Default().Build();
 
         var resultMapperLivro = new LivroReturnDtoBuilder().Default().Build();
 
-        _repoMockMapper.Setup(mapper => mapper.Map<LivroReturnDto>(It.IsAny<Livro>()))
+        _repoMockIMapper.Setup(mapper => mapper.Map<LivroReturnDto>(It.IsAny<Livro>()))
 .Returns(resultMapperLivro);
 
         var result = await _livroController.GetDetalhesPorId(request.CodL);
@@ -53,6 +49,6 @@ public class LivroControllerTest : BaseTestService
 
         matchResponse.ShouldNotBeNull();
         matchResponse.CodL.ShouldBeEquivalentTo(request.CodL);
-        _genericMockLivro.Verify(x => x.GetEntityWithSpec(It.IsAny<LivroObterTodosLivrosByFiltroSpecification>()), Times.Once);
+        _genericMockILivro.Verify(x => x.GetEntityWithSpec(It.IsAny<LivroObterTodosLivrosByFiltroSpecification>()), Times.Once);
     }
 }

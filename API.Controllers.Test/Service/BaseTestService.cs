@@ -29,17 +29,18 @@ public class BaseTestService : WebApplicationFactory<Program>
 internal Dictionary<string, string> OverrideConfiguration = new();
   private readonly WebApplicationFactory<Program> _factory;
 
-  protected Mock<ILivroRepository> _repoMockLivro;
-  protected Mock<IGenericRepository<Livro>> _genericMockLivro;
-  protected Mock<IAutorRepository> _reporMockAutor;
-  protected Mock<IAssuntoRepository> _reporMockAssunto;
+  protected Mock<ILivroRepository> _repoMockILivro;
+  protected Mock<IGenericRepository<Livro>> _genericMockILivro;
+  protected Mock<IAutorRepository> _reporMockIAutor;
+  protected Mock<IAssuntoRepository> _reporMockIAssunto;
   protected Mock<IValidator<LivroCriarDto>> _validatorMockLivroCriarDto;
   protected Mock<IValidator<LivroAtualizarDto>> _validatorMockLivroAtualizarDto;
-  protected Mock<IUnitOfWork> _repoMockUnitOfWork;
-  protected Mock<IMapper> _repoMockMapper;
-  protected Mock<IConverter> _repoMockConverter;
-  protected ILivroRepository _repoLivro => _repoMockLivro.Object;
+  protected Mock<IUnitOfWork> _repoMockIUnitOfWork;
+  protected Mock<IMapper> _repoMockIMapper;
+  protected Mock<IConverter> _repoMockIConverter;
+  protected ILivroRepository _repoLivro => _repoMockILivro.Object;
   protected LivroService _serviceLivro;
+  protected Mock<ILivroService> _serviceILivro;
   protected readonly HttpClient _httpClient;
 
   public BaseTestService()
@@ -55,20 +56,21 @@ internal Dictionary<string, string> OverrideConfiguration = new();
 
   private void LoadApplicationMockServices()
   {
-    _repoMockLivro = new Mock<ILivroRepository>();
-    _genericMockLivro = new Mock<IGenericRepository<Livro>>();
+    _repoMockILivro = new Mock<ILivroRepository>();
+    _genericMockILivro = new Mock<IGenericRepository<Livro>>();
     _validatorMockLivroCriarDto = new Mock<IValidator<LivroCriarDto>>();
     _validatorMockLivroAtualizarDto = new Mock<IValidator<LivroAtualizarDto>>();
-    _repoMockUnitOfWork = new Mock<IUnitOfWork>();
-    _repoMockMapper = new Mock<IMapper>();
-    _repoMockConverter = new Mock<IConverter>();
-        _reporMockAutor = new Mock<IAutorRepository>();
-        _reporMockAssunto = new Mock<IAssuntoRepository>();
+    _repoMockIUnitOfWork = new Mock<IUnitOfWork>();
+    _repoMockIMapper = new Mock<IMapper>();
+    _repoMockIConverter = new Mock<IConverter>();
+        _reporMockIAutor = new Mock<IAutorRepository>();
+        _reporMockIAssunto = new Mock<IAssuntoRepository>();
+        _serviceILivro = new Mock<ILivroService>();
   }
 
   private void LoadApplicationServices()
   {
-    _serviceLivro = new LivroService(_repoMockUnitOfWork.Object, _repoMockMapper.Object, _repoMockLivro.Object);
+    _serviceLivro = new LivroService(_repoMockIUnitOfWork.Object, _repoMockIMapper.Object, _repoMockILivro.Object);
   }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
