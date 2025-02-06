@@ -60,6 +60,29 @@ public class AssuntoController : BaseApiController
         return Ok(new PaginationWithReadOnyList<AssuntoReturnDto>(paramsQuery.PageIndex,
             paramsQuery.PageSize, totalItems, data));
     }
+    
+    [HttpGet("test")]
+    [ProducesDefaultResponseType]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<PaginationWithReadOnyList<AssuntoReturnDto>>> GetTestAssuntos(
+        [FromQuery] AssuntoSpecParams paramsQuery)
+    {
+        var spec = new AssuntoObterTodosAssuntosByFiltroSpecification(paramsQuery);
+        var countSpec = new AssuntoTotalCadastradosByFiltroSpecification(paramsQuery);
+        var totalItems = await _genericAssunto.CountAsync(countSpec);
+
+        var Assuntos = await _genericAssunto.ListReadOnlyListAsync(spec);
+
+        var data = _mapper.Map<IReadOnlyList<AssuntoReturnDto>>(Assuntos);
+
+        return Ok(new PaginationWithReadOnyList<AssuntoReturnDto>(paramsQuery.PageIndex,
+            paramsQuery.PageSize, totalItems, data));
+    }
 
     [HttpGet("details/{id:int}")]
     [ProducesDefaultResponseType]
